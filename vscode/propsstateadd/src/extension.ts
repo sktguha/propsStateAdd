@@ -17,10 +17,13 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('extension.addToProps', () => {
 			const axios = require('axios');
 			const editor = vscode.window.activeTextEditor;
+			console.log(editor);
 			const lastSel = editor?.selections.sort((a, b) => a.start.line - b.start.line).pop();
+			console.log(lastSel);
 			let cursorPosition = lastSel?.end;
 			let wordRange = cursorPosition && editor?.document.getWordRangeAtPosition(cursorPosition);
 			let highlight = wordRange && editor?.document.getText(wordRange);
+			console.log(cursorPosition, wordRange, highlight);
 			axios.get('http://localhost:9090?command=props&path='+vscode.window.activeTextEditor?.document.fileName+"&line="+lastSel?.end.line+"&char="+lastSel?.end.character+"&high="+highlight);
 		})
 	);	

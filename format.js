@@ -3,10 +3,11 @@
  * if we reach blank line means we reached top
  *   so o/p const { val } = this.target 1 after the blank line index
  * else if( reached any target){
- *     if( { char in same line means same line}){
+ *     if( '{' char in same line means same line ){
  *         then add ,<space>high at end part
  *     } else( { char in different line) {
- *
+ *          then find how many spaces from start to word in prev line
+ *          and add that + high, in the next line
  *     }
  * }
  *   
@@ -15,19 +16,28 @@
 const robot = require("robotjs");
 const http = require('http');
 const url = require('url');
+const fs = require('fs');
+
+// const queryObject = url.parse(req.url,true).query;
+const path = '/Users/sguha/Projects/threat-canvas-backend/app/src/components/Home/index.js';// || queryObject.path;
+// console.log(queryObject, req.url);
+fs.readFile(path, function(err, data) {
+    if(err) {
+        console.err(err.message);
+        return;
+    }
+    const target = "state";
+    const line = 126;
+    const targets = ["= this.state", "=this.state"];
+    // const arr = data.split("\n"); //use os seperator
+});
 
 const requestListener = function (req, res) {
     res.writeHead(200);
     res.end('Hello, World!');
-    setTimeout(()=> {
-        // robot.mouseClick('left', true)
-        // robot.keyTap('left', ['alt'])
-        // robot.keyTap('right', ['shift','alt'])
-        //ctrl x to copy full path
-    }, 1000);
-    const queryObject = url.parse(req.url,true).query;
-    console.log(queryObject, req.url);
+    console.log(req.url);
 }
 
 const server = http.createServer(requestListener);
 server.listen(9090);
+
