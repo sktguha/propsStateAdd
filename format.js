@@ -1,8 +1,14 @@
 /**
  * search for = this.target or =this.target or = target or =target upwards
- * if we react blank line means we reached top
+ * if we reach blank line means we reached top
  *   so o/p const { val } = this.target 1 after the blank line index
- * else 
+ * else if( reached any target){
+ *     if( { char in same line means same line}){
+ *         then add ,<space>high at end part
+ *     } else( { char in different line) {
+ *
+ *     }
+ * }
  *   
  */
 
