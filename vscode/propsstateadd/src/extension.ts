@@ -16,18 +16,23 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
         vscode.commands.registerCommand('extension.addToProps', () => {
 			const axios = require('axios');
-
-			axios.get('http://localhost:9090?command=props', (resp: any) => {
-				vscode.window.showInformationMessage('from propsadd ');
-			});			
+			const editor = vscode.window.activeTextEditor;
+			const lastSel = editor?.selections.sort((a, b) => a.start.line - b.start.line).pop();
+			let cursorPosition = lastSel?.end;
+			let wordRange = cursorPosition && editor?.document.getWordRangeAtPosition(cursorPosition);
+			let highlight = wordRange && editor?.document.getText(wordRange);
+			axios.get('http://localhost:9090?command=props&path='+vscode.window.activeTextEditor?.document.fileName+"&line="+lastSel?.end.line+"&char="+lastSel?.end.character+"&high="+highlight);
 		})
 	);	
 	context.subscriptions.push(
 		vscode.commands.registerCommand('extension.addToState', () => {
 			const axios = require('axios');
-			axios.get('http://localhost:9090?command=state', (resp: any) => {
-				vscode.window.showInformationMessage('from propsadd ');
-			});			
+			const editor = vscode.window.activeTextEditor;
+			const lastSel = editor?.selections.sort((a, b) => a.start.line - b.start.line).pop();
+			let cursorPosition = lastSel?.end;
+			let wordRange = cursorPosition && editor?.document.getWordRangeAtPosition(cursorPosition);
+			let highlight = wordRange && editor?.document.getText(wordRange);
+			axios.get('http://localhost:9090?command=state&path='+vscode.window.activeTextEditor?.document.fileName+"&line="+lastSel?.end.line+"&char="+lastSel?.end.character+"&high="+highlight);
         })
       );
 }
